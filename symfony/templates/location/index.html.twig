@@ -5,22 +5,32 @@
 {% block body %}
     <h1>Location index</h1>
 
+
+
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Address</th>
+                <th>Cluster</th>
                 <th>MaxNumberOfPersons</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for location in locations %}
+            {% set isCluster = false %}
+            {% for people in location.peopleWhoVisited %}
+                {% if people.hasCovid %}
+                    {% set isCluster = true %}
+                {% endif %}
+            {% endfor %}
             <tr>
                 <td>{{ location.id }}</td>
                 <td>{{ location.name }}</td>
                 <td>{{ location.address }}</td>
+                <td>{% if cluster %}OUI{% else %}NON{% endif %}</td>
                 <td>{{ location.maxNumberOfPersons }}</td>
                 <td>
                     <a href="{{ path('location_show', {'id': location.id}) }}">show</a>

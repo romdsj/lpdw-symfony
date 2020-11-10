@@ -44,6 +44,11 @@ class Person
      */
     private $visitedLocations;
 
+    /**
+     * @ORM\OneToOne(targetEntity=PersonCovid::class, mappedBy="person", cascade={"persist", "remove"})
+     */
+    private $hasCovid;
+
     public function __construct()
     {
         $this->visitedLocations = new ArrayCollection();
@@ -127,6 +132,23 @@ class Person
             if ($visitedLocation->getPerson() === $this) {
                 $visitedLocation->setPerson(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getHasCovid(): ?PersonCovid
+    {
+        return $this->hasCovid;
+    }
+
+    public function setHasCovid(PersonCovid $hasCovid): self
+    {
+        $this->hasCovid = $hasCovid;
+
+        // set the owning side of the relation if necessary
+        if ($hasCovid->getPerson() !== $this) {
+            $hasCovid->setPerson($this);
         }
 
         return $this;

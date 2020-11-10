@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Person</h1>
 
-    <p>{% if person.gender != 'Autre' %}{{ person.gender }}{% endif %} {{ person.firstname }} {{ person.lastname }}</p>
+    <p {% if person.hasCovid %}style="color:red"{% endif %}>{% if person.gender != 'Autre' %}{{ person.gender }}{% endif %} {{ person.firstname }} {{ person.lastname }}</p>
     <p>{% if person.gender == 'Madame' %}
         Née
         {% elseif person.gender == 'Monsieur' %}
@@ -14,6 +14,13 @@
         Né(e)
         {% endif %}
         le {{ person.birthday ? person.birthday|date('d F Y') : '' }}</p>
+
+    <p>Lieux visités</p>
+    <ul>
+        {% for visitedLocation in person.visitedLocations %}
+            <li>{{ visitedLocation.location.name }} {{ visitedLocation.visitedAt|date('d F Y H:i:s') }}</li>
+        {% endfor %}
+    </ul>
 
     <a href="{{ path('person_index') }}">back to list</a>
 

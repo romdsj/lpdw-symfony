@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PersonCovid{% endblock %}
+
+{% block body %}
+    <h1>PersonCovid</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ person_covid.id }}</td>
+            </tr>
+            <tr>
+                <th>DetectedAt</th>
+                <td>{{ person_covid.detectedAt ? person_covid.detectedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('person_covid_index') }}">back to list</a>
+
+    <a href="{{ path('person_covid_edit', {'id': person_covid.id}) }}">edit</a>
+
+    {{ include('person_covid/_delete_form.html.twig') }}
+{% endblock %}
