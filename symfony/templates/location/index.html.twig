@@ -22,7 +22,7 @@
         {% for location in locations %}
             {% set isCluster = false %}
             {% for people in location.peopleWhoVisited %}
-                {% if people.hasCovid %}
+                {% if people.person.hasCovid %}
                     {% set isCluster = true %}
                 {% endif %}
             {% endfor %}
@@ -30,7 +30,7 @@
                 <td>{{ location.id }}</td>
                 <td>{{ location.name }}</td>
                 <td>{{ location.address }}</td>
-                <td>{% if cluster %}OUI{% else %}NON{% endif %}</td>
+                <td>{% if isCluster %}OUI{% else %}NON{% endif %}</td>
                 <td>{{ location.maxNumberOfPersons }}</td>
                 <td>
                     <a href="{{ path('location_show', {'id': location.id}) }}">show</a>
