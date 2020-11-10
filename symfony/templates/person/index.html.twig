@@ -21,7 +21,7 @@
                 <td>{{ person.id }}</td>
                 <td>{{ person.firstname }}</td>
                 <td>{{ person.lastname }}</td>
-                <td>{{ person.birthday ? person.birthday|date('Y-m-d') : '' }}</td>
+                <td>{{ person.birthday ? person.birthday|date('d F Y') : '' }}</td>
                 <td>
                     <a href="{{ path('person_show', {'id': person.id}) }}">show</a>
                     <a href="{{ path('person_edit', {'id': person.id}) }}">edit</a>

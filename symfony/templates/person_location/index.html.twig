@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PersonLocation index{% endblock %}
+
+{% block body %}
+    <h1>PersonLocation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>VisitedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for person_location in person_locations %}
+            <tr>
+                <td>{{ person_location.id }}</td>
+                <td>{{ person_location.visitedAt ? person_location.visitedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('person_location_show', {'id': person_location.id}) }}">show</a>
+                    <a href="{{ path('person_location_edit', {'id': person_location.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('person_location_new') }}">Create new</a>
+{% endblock %}

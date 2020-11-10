@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Person
      * @ORM\Column(type="string", length=255)
      */
     private $gender;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PersonLocation::class, mappedBy="person", orphanRemoval=true)
+     */
+    private $visitedLocations;
+
+    public function __construct()
+    {
+        $this->visitedLocations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class Person
     public function setGender(string $gender): self
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PersonLocation[]
+     */
+    public function getVisitedLocations(): Collection
+    {
+        return $this->visitedLocations;
+    }
+
+    public function addVisitedLocation(PersonLocation $visitedLocation): self
+    {
+        if (!$this->visitedLocations->contains($visitedLocation)) {
+            $this->visitedLocations[] = $visitedLocation;
+            $visitedLocation->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitedLocation(PersonLocation $visitedLocation): self
+    {
+        if ($this->visitedLocations->removeElement($visitedLocation)) {
+            // set the owning side to null (unless already changed)
+            if ($visitedLocation->getPerson() === $this) {
+                $visitedLocation->setPerson(null);
+            }
+        }
 
         return $this;
     }
