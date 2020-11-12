@@ -15,12 +15,12 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: false
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: login
-                check_path: login
+                login_path: app_login
+                check_path: app_login
             guard:
                 authenticators:
                     - App\Security\AppAuthenticator
@@ -38,5 +38,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/location, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/person_location, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/person_covid, roles: IS_AUTHENTICATED_FULLY }
