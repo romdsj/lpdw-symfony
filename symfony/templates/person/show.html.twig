@@ -34,6 +34,18 @@
                 {% endfor %}
             {% endfor %}
         </ul>
+    {% else %}
+        <p>Personnes que cette personne a rendu cas contact</p>
+        <ul>
+            {% for visitedLocation in person.visitedLocations %}
+                {% for people in visitedLocation.location.peopleWhoVisited %}
+                    {% set dateDiff = visitedLocation.visitedAt.diff(people.visitedAt) %}
+                    {% if not people.person.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
+                        <li>{{ people.person.firstname }} {{ people.person.lastname }}</li>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </ul>
     {% endif %}
 
     <a href="{{ path('person_index') }}">back to list</a>
