@@ -27,7 +27,8 @@
         <ul>
             {% for visitedLocation in person.visitedLocations %}
                 {% for people in visitedLocation.location.peopleWhoVisited %}
-                    {% if people.person.hasCovid and visitedLocation.visitedAt.diff(people.visitedAt).h < 3 %}
+                    {% set dateDiff = visitedLocation.visitedAt.diff(people.visitedAt) %}
+                    {% if people.person.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
                         <li>{{ people.person.firstname }} {{ people.person.lastname }}</li>
                     {% endif %}
                 {% endfor %}
