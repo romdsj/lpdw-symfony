@@ -15,6 +15,10 @@
                 <th>DetectedAt</th>
                 <td>{{ person_covid.detectedAt ? person_covid.detectedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>Person</th>
+                <td>{{ person_covid.person.firstname }} {{ person_covid.person.lastname }}</td>
+            </tr>
         </tbody>
     </table>
 

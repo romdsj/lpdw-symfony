@@ -26,6 +26,15 @@
         </tbody>
     </table>
 
+    <h2>Personnes ayant visitées et ayant le Covid</h2>
+    <ul>
+        {% for people in location.peopleWhoVisited %}
+            {% if people.person.hasCovid %}
+                <li>{{ people.person.firstname }} {{ people.person.lastname }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
     <a href="{{ path('location_index') }}">back to list</a>
 
     <a href="{{ path('location_edit', {'id': location.id}) }}">edit</a>
