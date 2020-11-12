@@ -28,8 +28,8 @@
             {% for visitedLocation in person.visitedLocations %}
                 {% for people in visitedLocation.location.peopleWhoVisited %}
                     {% set dateDiff = visitedLocation.visitedAt.diff(people.visitedAt) %}
-                    {% if people.person.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
-                        <li>{{ people.person.firstname }} {{ people.person.lastname }}</li>
+                    {% if people.user.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
+                        <li>{{ people.user.firstname }} {{ people.user.lastname }}</li>
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -40,8 +40,8 @@
             {% for visitedLocation in person.visitedLocations %}
                 {% for people in visitedLocation.location.peopleWhoVisited %}
                     {% set dateDiff = visitedLocation.visitedAt.diff(people.visitedAt) %}
-                    {% if not people.person.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
-                        <li>{{ people.person.firstname }} {{ people.person.lastname }}</li>
+                    {% if not people.user.hasCovid and dateDiff.h < 3 and dateDiff.days == 0 and dateDiff.y == 0 and dateDiff.m == 0 %}
+                        <li>{{ people.user.firstname }} {{ people.user.lastname }}</li>
                     {% endif %}
                 {% endfor %}
             {% endfor %}

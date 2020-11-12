@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Person;
+use App\Entity\User;
 use App\Entity\PersonCovid;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -15,8 +15,8 @@ class PersonCovidType extends AbstractType
     {
         $builder
             ->add('detectedAt')
-            ->add('person', EntityType::class, [
-                'class' => Person::class,
+            ->add('user', EntityType::class, [
+                'class' => User::class,
                 'choice_label' => 'lastname'
             ])
         ;

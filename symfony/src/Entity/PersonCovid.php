@@ -18,10 +18,10 @@ class PersonCovid
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Person::class, inversedBy="hasCovid", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="hasCovid", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $person;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -33,14 +33,14 @@ class PersonCovid
         return $this->id;
     }
 
-    public function getPerson(): ?Person
+    public function getUser(): ?User
     {
-        return $this->person;
+        return $this->user;
     }
 
-    public function setPerson(Person $person): self
+    public function setUser(User $user): self
     {
-        $this->person = $person;
+        $this->user = $user;
 
         return $this;
     }
