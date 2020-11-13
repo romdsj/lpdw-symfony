@@ -3,9 +3,5 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-    <ul>
-        <li><a href="{{ path('person_location_index') }}">PersonLocation</a></li>
-        <li><a href="{{ path('location_index') }}">Location</a></li>
-        <li><a href="{{ path('person_covid_index') }}">PersonCovid</a></li>
-    </ul>
+    <a href="{{ path('profile', { 'id': app.user.id }) }}">Mon profil</a>
 {% endblock %}

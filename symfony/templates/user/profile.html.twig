@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+    <h1>User Profile</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>Firstname</th>
+            <td>{{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <th>Lastname</th>
+            <td>{{ user.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Birthday</th>
+            <td>{{ user.birthday|date('d F Y') }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{{ user.gender }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('profile_edit', {'id': user.id}) }}">edit</a>
+
+{% endblock %}

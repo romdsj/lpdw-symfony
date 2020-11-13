@@ -20,7 +20,7 @@ class LocationController extends AbstractController
      */
     public function index(LocationRepository $locationRepository): Response
     {
-        return $this->render('location/register.html.twig', [
+        return $this->render('location/index.html.twig', [
             'locations' => $locationRepository->findAll(),
         ]);
     }
