@@ -3,5 +3,11 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
+    <p>Username : {{ app.user.username }} Firstname : {{ app.user.firstname }}
+    </p>
+
+
     <a href="{{ path('profile', { 'id': app.user.id }) }}">Mon profil</a>
+    <a href="{{ path('person_location_new', { 'id': app.user.id }) }}">Ajouter un lieu visité</a>
+    <a href="{{ path('person_covid_new', { 'id': app.user.id }) }}">Déclarer que j'ai le covid</a>
 {% endblock %}

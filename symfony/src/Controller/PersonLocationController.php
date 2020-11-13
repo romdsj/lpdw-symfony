@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PersonLocation;
+use App\Entity\User;
 use App\Form\PersonLocationType;
 use App\Repository\PersonLocationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,12 @@ class PersonLocationController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="person_location_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="person_location_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(User $user, Request $request): Response
     {
         $personLocation = new PersonLocation();
+        $personLocation->setUser($user);
         $form = $this->createForm(PersonLocationType::class, $personLocation);
         $form->handleRequest($request);
 
@@ -39,7 +41,7 @@ class PersonLocationController extends AbstractController
             $entityManager->persist($personLocation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('person_location_index');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('person_location/new.html.twig', [

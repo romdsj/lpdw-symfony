@@ -15,10 +15,6 @@ class PersonCovidType extends AbstractType
     {
         $builder
             ->add('detectedAt')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'lastname'
-            ])
         ;
     }
 

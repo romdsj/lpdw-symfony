@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PersonCovid;
+use App\Entity\User;
 use App\Form\PersonCovidType;
 use App\Repository\PersonCovidRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,12 @@ class PersonCovidController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="person_covid_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="person_covid_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(User $user, Request $request): Response
     {
         $personCovid = new PersonCovid();
+        $personCovid->setUser($user);
         $form = $this->createForm(PersonCovidType::class, $personCovid);
         $form->handleRequest($request);
 
@@ -39,7 +41,7 @@ class PersonCovidController extends AbstractController
             $entityManager->persist($personCovid);
             $entityManager->flush();
 
-            return $this->redirectToRoute('person_covid_index');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('person_covid/new.html.twig', [

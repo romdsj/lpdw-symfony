@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Location;
-use App\Entity\User;
 use App\Entity\PersonLocation;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,10 +15,6 @@ class PersonLocationType extends AbstractType
     {
         $builder
             ->add('visitedAt')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'lastname'
-            ])
             ->add('location', EntityType::class, [
                 'class' => Location::class,
                 'choice_label' => 'name'
