@@ -3,11 +3,36 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-    <p>Username : {{ app.user.username }} Firstname : {{ app.user.firstname }}
-    </p>
+    <p>Username : {{ app.user.username }} Firstname : {{ app.user.firstname }}</p>
 
+
+    {% if app.user.hasCovid %}
+        <p style="color:red">Tu as le covid</p>
+    {% else %}
+        {% set isCasContact = false %}
+        {% for personLocation in app.user.visitedLocations %}
+            {% for people in personLocation.location.peopleWhoVisited %}
+                {% set dateDiff = personLocation.visitedAt.diff(people.visitedAt) %}
+                {% if people.user.hasCovid and dateDiff.h < 3 and dateDiff.y == 0 and dateDiff.m == 0 and dateDiff.d == 0 %}
+                    {% set isCasContact = true %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if isCasContact %}
+            <p style="color:orange">Tu es cas contact</p>
+        {% else %}
+            <p style="color:green">Tout va bien</p>
+        {% endif %}
+    {% endif %}
 
     <a href="{{ path('profile', { 'id': app.user.id }) }}">Mon profil</a>
     <a href="{{ path('person_location_new', { 'id': app.user.id }) }}">Ajouter un lieu visité</a>
-    <a href="{{ path('person_covid_new', { 'id': app.user.id }) }}">Déclarer que j'ai le covid</a>
+    {% if not app.user.hasCovid %}<a href="{{ path('person_covid_new', { 'id': app.user.id }) }}">Déclarer que j'ai le covid</a>{% endif %}
+
+    <ul>
+        {% for personLocation in app.user.visitedLocations %}
+            <li>{{ personLocation.location.name }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
