@@ -20,7 +20,7 @@ class PersonCovidController extends AbstractController
      */
     public function index(PersonCovidRepository $personCovidRepository): Response
     {
-        return $this->render('person_covid/index.html.twig', [
+        return $this->render('person_covid/register.html.twig', [
             'person_covids' => $personCovidRepository->findAll(),
         ]);
     }

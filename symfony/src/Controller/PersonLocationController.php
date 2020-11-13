@@ -20,7 +20,7 @@ class PersonLocationController extends AbstractController
      */
     public function index(PersonLocationRepository $personLocationRepository): Response
     {
-        return $this->render('person_location/index.html.twig', [
+        return $this->render('person_location/register.html.twig', [
             'person_locations' => $personLocationRepository->findAll(),
         ]);
     }
