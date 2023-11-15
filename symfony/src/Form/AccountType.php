@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Account;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,6 +15,8 @@ class AccountType extends AbstractType
         $builder
             ->add('iban')
             ->add('balance')
+            ->add('maxDebitAmount')
+            ->add('type', EnumType::class, ['class' => \App\Enum\AccountType::class])
         ;
     }
 

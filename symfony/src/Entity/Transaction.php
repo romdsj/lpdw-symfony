@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\TransactionRepository;
+use App\Validator as CustomAssert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[CustomAssert\MaxDebitConstraint]
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
 {

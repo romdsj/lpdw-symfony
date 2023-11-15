@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\AccountType;
 use App\Repository\AccountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,6 +31,12 @@ class Account
 
     #[ORM\OneToMany(mappedBy: 'creditAccount', targetEntity: Transaction::class, orphanRemoval: true)]
     private Collection $creditTransactions;
+
+    #[ORM\Column]
+    private ?int $maxDebitAmount = null;
+
+    #[ORM\Column]
+    private AccountType $type;
 
     public function __construct()
     {
@@ -122,6 +129,30 @@ class Account
                 $creditTransaction->setCreditAccount(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMaxDebitAmount(): ?int
+    {
+        return $this->maxDebitAmount;
+    }
+
+    public function setMaxDebitAmount(int $maxDebitAmount): static
+    {
+        $this->maxDebitAmount = $maxDebitAmount;
+
+        return $this;
+    }
+
+    public function getType(): ?AccountType
+    {
+        return $this->type;
+    }
+
+    public function setType(AccountType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

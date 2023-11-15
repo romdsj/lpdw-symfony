@@ -21,8 +21,11 @@ class BalanceService {
         } else {
             $previousCreditAccount->setBalance($previousCreditAccount->getBalance() - $previousAmount);
             $transaction->getCreditAccount()->setBalance($transaction->getCreditAccount()->getBalance() + $transaction->getAmount());
-        }
+        }  
+    }
 
-        
+    public function deleteTransaction(Transaction $transaction) {
+        $transaction->getDebitAccount()->setBalance($transaction->getDebitAccount()->getBalance() + $transaction->getAmount());
+        $transaction->getCreditAccount()->setBalance($transaction->getCreditAccount()->getBalance() - $transaction->getAmount());
     }
 }
