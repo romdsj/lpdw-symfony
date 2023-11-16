@@ -34,6 +34,10 @@ class Transaction
     #[ORM\JoinColumn(nullable: false)]
     private ?Account $creditAccount = null;
 
+    public function __construct() {
+        $this->date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -9,13 +9,13 @@
         {% for account in person.accounts %}
         <div class="accordion-item">
             <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#account{{ account.id}}" aria-expanded="true" aria-controls="account{{ account.id}}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#account{{ account.id}}" aria-expanded="false" aria-controls="account{{ account.id}}">
                 {{ account.type.value }} - {{account.iban}} : {{ account.balance|number_format(2, '.', ',') }}
             </button>
             </h2>
-            <div id="account{{ account.id}}" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div id="account{{ account.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                {% for transaction in account.debitTransactions|merge(account.creditTransactions)|sort((a, b) => a.date|date('YmdHis') > b.date|date('YmdHis'))|slice(0, 4) %}
+                {% for transaction in account.debitTransactions|merge(account.creditTransactions)|sort((a, b) => a.date|date('YmdHis') < b.date|date('YmdHis'))|slice(0, 4) %}
                     {{ transaction.label}} / {% if transaction.debitAccount == account %}-{% else %}+{% endif %}{{ transaction.amount|number_format(2, '.', ',') }}<br />
                 {% endfor %}
             </div>

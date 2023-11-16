@@ -15,7 +15,6 @@ class TransactionType extends AbstractType
     {
         $builder
             ->add('amount')
-            ->add('date')
             ->add('label')
             ->add('debitAccount', EntityType::class, [
                 'class' => Account::class,

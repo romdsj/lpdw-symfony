@@ -3,31 +3,33 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
-    <h1>Account</h1>
+    <h1>{{ account.type.value}} - {{ account.iban }}</h1>
 
-    <table class="table">
-        <tbody>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Debit</th>
+            <th>Credit</th>
+        </tr>
+        {% for transaction in account.debitTransactions|merge(account.creditTransactions)|sort((a, b) => a.date|date('YmdHis') < b.date|date('YmdHis')) %}
             <tr>
-                <th>Id</th>
-                <td>{{ account.id }}</td>
+                <td>{{ transaction.date|date('Y-m-d H:i:s') }}</td>
+                <td>
+                {% if transaction.debitAccount == account %}
+                    <div class="alert alert-danger" role="alert">
+                        -{{transaction.amount|number_format(2, '.', ',') }}
+                    </div>
+                {% endif %}
+                </td>
+                <td>
+                {% if transaction.creditAccount == account %}
+                    <div class="alert alert-success" role="alert">
+                        +{{transaction.amount|number_format(2, '.', ',') }}
+                    </div>
+                {% endif %}
+                </td>
             </tr>
-            <tr>
-                <th>Iban</th>
-                <td>{{ account.iban }}</td>
-            </tr>
-            <tr>
-                <th>Balance</th>
-                <td>{{ account.balance }}</td>
-            </tr>
-            <tr>
-                <th>Maximum debit amount</th>
-                <td>{{ account.maxDebitAmount }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ account.type.value }}</td>
-            </tr>
-        </tbody>
+        {% endfor %}
     </table>
 
     <a href="{{ path('app_account_index') }}">back to list</a>
