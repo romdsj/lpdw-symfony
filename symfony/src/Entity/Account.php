@@ -38,6 +38,10 @@ class Account
     #[ORM\Column]
     private AccountType $type;
 
+    #[ORM\ManyToOne(inversedBy: 'accounts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Person $person = null;
+
     public function __construct()
     {
         $this->debitTransactions = new ArrayCollection();
@@ -153,6 +157,18 @@ class Account
     public function setType(AccountType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPerson(): ?Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(?Person $person): static
+    {
+        $this->person = $person;
 
         return $this;
     }
