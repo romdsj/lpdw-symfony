@@ -22,9 +22,16 @@
         </tbody>
     </table>
 
+    <ul>
+    {% for account in person.accounts %}
+        <li>{{ account.iban }}</li>
+    {% endfor %}
+    </ul>
+
     <a href="{{ path('app_person_index') }}">back to list</a>
 
     <a href="{{ path('app_person_edit', {'id': person.id}) }}">edit</a>
+    <a href="{{ path('app_account_new_person', {'id': person.id}) }}">Creer un compte</a>
 
     {{ include('person/_delete_form.html.twig') }}
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Account;
+use App\Entity\Person;
 use App\Form\AccountType;
 use App\Repository\AccountRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,6 +35,27 @@ class AccountController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_account_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('account/new.html.twig', [
+            'account' => $account,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/new/person/{id}', name: 'app_account_new_person', methods: ['GET', 'POST'])]
+    public function newFromPerson(Request $request, EntityManagerInterface $entityManager, Person $person): Response
+    {
+        $account = new Account();
+        $account->setPerson($person);
+        $form = $this->createForm(AccountType::class, $account);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($account);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_person_show', ['id' => $person->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('account/new.html.twig', [

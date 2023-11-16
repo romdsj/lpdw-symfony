@@ -14,16 +14,22 @@ class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $account = $builder->getData();
         $builder
             ->add('iban')
             ->add('balance')
             ->add('maxDebitAmount')
             ->add('type', EnumType::class, ['class' => \App\Enum\AccountType::class])
-            ->add('person', EntityType::class, [
-                'class' => Person::class,
-                'choice_label' => 'lastname'
-            ])
         ;
+
+        if(is_null($account->getPerson())) {
+            $builder->add('person', EntityType::class, [
+                'class' => Person::class,
+                'choice_label' => function (Person $person): string {
+                    return $person->getFirstName() . ' ' . $person->getLastName();
+                }
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
