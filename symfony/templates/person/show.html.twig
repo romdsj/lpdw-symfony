@@ -3,30 +3,26 @@
 {% block title %}Person{% endblock %}
 
 {% block body %}
-    <h1>Person</h1>
+    <h1>{{ person.firstname }} {{ person.lastname }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ person.id }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ person.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ person.lastname }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-    {% for account in person.accounts %}
-        <li>{{ account.iban }}</li>
-    {% endfor %}
-    </ul>
+    <div class="accordion" id="accordionExample">
+        {% for account in person.accounts %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#account{{ account.id}}" aria-expanded="true" aria-controls="account{{ account.id}}">
+                {{ account.type.value }} - {{account.iban}} : {{ account.balance|number_format(2, '.', ',') }}
+            </button>
+            </h2>
+            <div id="account{{ account.id}}" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                {% for transaction in account.debitTransactions|merge(account.creditTransactions)|sort((a, b) => a.date|date('YmdHis') > b.date|date('YmdHis'))|slice(0, 4) %}
+                    {{ transaction.label}} / {% if transaction.debitAccount == account %}-{% else %}+{% endif %}{{ transaction.amount|number_format(2, '.', ',') }}<br />
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     <a href="{{ path('app_person_index') }}">back to list</a>
 
