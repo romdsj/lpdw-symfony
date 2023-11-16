@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Iban</th>
                 <th>Balance</th>
+                <th>Type</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ account.id }}</td>
                 <td>{{ account.iban }}</td>
                 <td>{{ account.balance }}</td>
+                <td>{{ account.type.value }}</td>
                 <td>
                     <a href="{{ path('app_account_show', {'id': account.id}) }}">show</a>
                     <a href="{{ path('app_account_edit', {'id': account.id}) }}">edit</a>
